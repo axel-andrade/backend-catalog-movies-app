@@ -10,6 +10,7 @@ exports.createStar = [
     utils.createCheckValidator('birth_info.city', 'IS_EMPTY'),
     utils.createCheckValidator('birth_info.state', 'IS_EMPTY'),
     utils.createCheckValidator('birth_info.country', 'IS_EMPTY'),
+    utils.createCheckValidator('gender', 'IS_EMPTY'),
     utils.createCheckValidator('profile_image', 'IS_EMPTY'),
     utils.createCheckValidator('height_meters', 'IS_EMPTY'),
     utils.createCheckValidator('type', 'IS_EMPTY'),

@@ -11,4 +11,6 @@ router.post(
     controller.createStar
 );
 
+router.get('/:star_id', trimRequest.all, controller.getStarById);
+
 module.exports = router;

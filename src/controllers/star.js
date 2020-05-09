@@ -1,5 +1,5 @@
 const Star = require('../models/star');
-const BirthInfo = require('../models/birth-info');
+const BirthInfo = require('../models/birthInfo');
 const utils = require('../utils');
 
 module.exports = {
@@ -15,6 +15,17 @@ module.exports = {
                 ...star.toJSON(),
                 birth_info: birthInfo
             });
+        } catch (e) {
+            res.status(400).send(e);
+        }
+    },
+    async getStarById(req, res) {
+        try {
+            const { star_id } = req.params;
+            const star = await Star.findByPk(star_id,{
+                include: { association: 'birth_info'}
+            });
+            return res.json(star);
         } catch (e) {
             res.status(400).send(e);
         }

@@ -5,9 +5,14 @@ class Star extends Model {
         super.init({
             artistic_name: DataTypes.STRING,
             bio: DataTypes.STRING,
+            gender: DataTypes.ENUM({
+                values: ['male','female','outher']
+            }),
             profile_image: DataTypes.STRING,
             height_meters: DataTypes.FLOAT,
-            type: DataTypes.ARRAY(DataTypes.STRING)
+            type: DataTypes.ARRAY(DataTypes.ENUM({
+                values: ['actor', 'director', 'writer']
+            }))
         }, {
             sequelize
         })

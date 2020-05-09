@@ -28,12 +28,20 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      gender: {
+        type: Sequelize.ENUM({
+          values: ['male','female','outher']
+        }),
+        allowNull: false
+      },
       height_meters: {
         type: Sequelize.FLOAT,
         allowNull: false
       },
       type: {
-        type: Sequelize.ARRAY(Sequelize.STRING(15)),
+        type: Sequelize.ARRAY(Sequelize.ENUM({
+          values: ['actor', 'director', 'writer']
+        })),
         allowNull: false
       },
       created_at: {

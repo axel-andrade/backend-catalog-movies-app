@@ -4,7 +4,7 @@ const dbConfig = require('../config/database');
 const User = require('../models/user');
 const Movie = require('../models/movie');
 const Star = require('../models/star');
-const BirthInfo = require('../models/birth-info');
+const BirthInfo = require('../models/birthInfo');
 
 const connection = new Sequelize(dbConfig);
 
