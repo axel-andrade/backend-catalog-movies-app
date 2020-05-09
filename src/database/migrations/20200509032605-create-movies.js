@@ -21,6 +21,14 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      url_poster: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      url_trailer: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
       year: {
         type: Sequelize.INTEGER,
         allowNull: false

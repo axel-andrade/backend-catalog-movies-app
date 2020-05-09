@@ -2,15 +2,20 @@ const User = require('../models/User');
 
 module.exports = {
     async createUser(req, res) {
-        const { name, email } = req.body;
-
-        const user = await User.create({ name, email });
-
-        return res.json(user);
+        try {
+            const {name, email} = req.body;
+            const user = await User.create({name, email});
+            return res.json(user);
+        } catch (e) {
+            res.status(400).send(e);
+        }
     },
     async getUsers(req, res) {
-        const users = await User.findAll();
-
-        return res.json(users);
+        try {
+            const users = await User.findAll();
+            return res.json(users);
+        } catch (e) {
+            res.status(400).send(e);
+        }
     },
 };
