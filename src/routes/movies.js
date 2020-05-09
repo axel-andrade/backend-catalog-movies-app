@@ -5,6 +5,7 @@ const validator = require('../validators/movie');
 const trimRequest = require('trim-request')
 
 router.get('/', controller.getMovies);
+router.get('/:id', controller.getMovieById);
 router.post(
     '/',
     trimRequest.all,
