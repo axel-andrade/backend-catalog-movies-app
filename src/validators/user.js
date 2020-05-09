@@ -1,10 +1,6 @@
 const { validationResult } = require('../utils')
-const validator = require('validator')
 const { check } = require('express-validator')
 
-/**
- * Validates create new item request
- */
 exports.createUser = [
     check('name')
         .exists()
