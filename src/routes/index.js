@@ -10,6 +10,7 @@ router.get('/', (req, res, next) => {
 
 /* Routes */
 router.use('/users', require('./users'));
+router.use('/movies', require('./movies'));
 
 router.use('*', (req, res) => {
     res.status(404).json({

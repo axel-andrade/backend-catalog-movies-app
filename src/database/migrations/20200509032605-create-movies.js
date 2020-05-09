@@ -13,7 +13,11 @@ module.exports = {
         type: Sequelize.STRING(50),
         allowNull: false,
       },
-      synopsis: {
+      original_title: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+      },
+      description: {
         type: Sequelize.STRING,
         allowNull: false
       },
@@ -23,11 +27,25 @@ module.exports = {
       },
       url_poster: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: false
       },
       url_trailer: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: false
+      },
+      duration_minutes: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      age_range: {
+        type: Sequelize.ENUM({
+          values: ['free', '+12', '+14', '+18']
+        }),
+        allowNull: false
+      },
+      release_date: {
+        type: Sequelize.DATE,
+        allowNull: false
       },
       year: {
         type: Sequelize.INTEGER,

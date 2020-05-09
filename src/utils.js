@@ -1,4 +1,5 @@
 const { validationResult } = require('express-validator')
+const { check } = require('express-validator')
 
 exports.buildErrObject = (code, message) => {
     return {
@@ -28,6 +29,17 @@ exports.validationResult = (req, res, next) => {
         return next()
     } catch (err) {
         return this.handleError(res, this.buildErrObject(422, err.array()))
+    }
+}
+
+exports.createCheckValidator = (field, type) => {
+    if(field && type === 'IS_EMPTY' ){
+        return check(field)
+            .exists()
+            .withMessage('MISSING')
+            .not()
+            .isEmpty()
+            .withMessage('IS_EMPTY')
     }
 }
 
