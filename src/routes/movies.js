@@ -13,4 +13,47 @@ router.post(
     controller.createMovie
 );
 
+router.post(
+    '/:movie_id/directors',
+    trimRequest.all,
+    validator.addOrRemoveStars,
+    controller.addDirectors
+);
+
+router.post(
+    '/:movie_id/directors',
+    trimRequest.all,
+    validator.addOrRemoveStars,
+    controller.removeDirectors
+);
+
+router.post(
+    '/:movie_id/actors',
+    trimRequest.all,
+    validator.addOrRemoveStars,
+    controller.addActors
+);
+
+router.post(
+    '/:movie_id/actors',
+    trimRequest.all,
+    validator.addOrRemoveStars,
+    controller.removeActors
+);
+
+router.post(
+    '/:movie_id/writers',
+    trimRequest.all,
+    validator.addOrRemoveStars,
+    controller.addWriters
+);
+
+router.post(
+    '/:movie_id/writers',
+    trimRequest.all,
+    validator.addOrRemoveStars,
+    controller.addWriters
+);
+
+
 module.exports = router;

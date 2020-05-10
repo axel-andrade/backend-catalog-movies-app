@@ -1,12 +1,12 @@
 const { Model, DataTypes } = require('sequelize');
 
-class Direction extends Model {
+class Write extends Model {
     static init(sequelize) {
         super.init({
-            director_id: DataTypes.INTEGER,
+            writer_id: DataTypes.INTEGER,
             movie_id: DataTypes.INTEGER
         }, {sequelize})
     }
 }
 
-module.exports = Direction;
+module.exports = Write;

@@ -9,7 +9,6 @@ class Star extends Model {
             birth_city: DataTypes.STRING,
             birth_state: DataTypes.STRING,
             birth_country: DataTypes.STRING,
-            country: DataTypes.STRING,
             bio: DataTypes.STRING,
             gender: DataTypes.ENUM({
                 values: ['male','female','outher']
@@ -23,6 +22,7 @@ class Star extends Model {
             sequelize
         })
     }
+
 }
 
 module.exports = Star;

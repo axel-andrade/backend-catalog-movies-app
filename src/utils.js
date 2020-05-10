@@ -1,5 +1,5 @@
-const { validationResult } = require('express-validator')
-const { check } = require('express-validator')
+const {validationResult} = require('express-validator')
+const {check} = require('express-validator')
 
 exports.buildErrObject = (code, message) => {
     return {
@@ -33,7 +33,7 @@ exports.validationResult = (req, res, next) => {
 }
 
 exports.createCheckValidator = (field, type) => {
-    if(field && type === 'IS_EMPTY' ){
+    if (field && type === 'IS_EMPTY') {
         return check(field)
             .exists()
             .withMessage('MISSING')
@@ -42,4 +42,37 @@ exports.createCheckValidator = (field, type) => {
             .withMessage('IS_EMPTY')
     }
 }
+exports.verifySpecialties = (specialties) => {
+    const validSpecialties = ['actor', 'director', 'writer'];
+    if (!specialties || !Array.isArray(specialties)) {
+        return false;
+    }
+    let isValid = true;
+    for (let i = 0; i < specialties.length; i++) {
+        if (!validSpecialties.includes(specialties[i])) {
+            isValid = false;
+            break;
+        }
+    }
+    return isValid;
+};
 
+exports.formatOptionForQueryMovie = (
+    associationName1,
+    associationName2,
+    attributes1 = [],
+    attributes2 = [],
+    attributes3 = []
+) => {
+    return {
+        association: associationName1,
+        include: {
+            association: associationName2,
+            atributes: attributes1
+        },
+        atributes: attributes2,
+        through: {
+            attributes: attributes3
+        }
+    };
+};

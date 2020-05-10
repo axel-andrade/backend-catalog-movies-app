@@ -16,3 +16,9 @@ exports.createMovie = [
         validationResult(req, res, next)
     }
 ]
+exports.addOrRemoveStars = [
+    utils.createCheckValidator('ids', 'IS_EMPTY'),
+    (req, res, next) => {
+        validationResult(req, res, next)
+    }
+]

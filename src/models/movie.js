@@ -21,8 +21,9 @@ class Movie extends Model {
     }
 
     static associate(models) {
-        /* a film and directed by many stars */
-        this.belongsToMany(models.Star, { foreignKey: 'movie_id', through: 'directions', as: 'directed' });
+        this.belongsToMany(models.Director, { foreignKey: 'movie_id', through: 'directions', as: 'directors' });
+        this.belongsToMany(models.Actor, { foreignKey: 'movie_id', through: 'casts', as: 'actors' });
+        this.belongsToMany(models.Writer, { foreignKey: 'movie_id', through: 'writes', as: 'writers' });
     }
 }
 
