@@ -17,12 +17,25 @@ module.exports = {
         type: Sequelize.STRING(1000),
         allowNull: false,
       },
-      birth_info_id: {
-        type: Sequelize.INTEGER,
+      birth_name: {
+        type: Sequelize.STRING(50),
         allowNull: false,
-        references: { model: 'birth_infos', key: 'id' },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+      },
+      birth_date: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      birth_city: {
+        type: Sequelize.STRING(30),
+        allowNull: false
+      },
+      birth_state: {
+        type: Sequelize.STRING(30),
+        allowNull: false
+      },
+      birth_country: {
+        type: Sequelize.STRING(3),
+        allowNull: false
       },
       profile_image: {
         type: Sequelize.STRING,
@@ -38,12 +51,9 @@ module.exports = {
         type: Sequelize.FLOAT,
         allowNull: false
       },
-      type: {
-        type: Sequelize.ARRAY(Sequelize.ENUM({
-          values: ['actor', 'director', 'writer']
-        })),
-        allowNull: false
-      },
+      specialties: Sequelize.ARRAY(Sequelize.ENUM({
+        values: ['actor', 'director', 'writer']
+      })),
       created_at: {
         type: Sequelize.DATE,
         allowNull: false

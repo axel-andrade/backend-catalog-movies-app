@@ -19,6 +19,11 @@ class Movie extends Model {
             sequelize
         })
     }
+
+    static associate(models) {
+        /* a film and directed by many stars */
+        this.belongsToMany(models.Star, { foreignKey: 'movie_id', through: 'directions', as: 'directed' });
+    }
 }
 
 module.exports = Movie;

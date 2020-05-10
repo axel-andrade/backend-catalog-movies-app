@@ -14,7 +14,7 @@ module.exports = {
         try {
             const movie = await Movie.findByPk(req.params.id);
             if(!movie){
-                return res.status(400).send(utils.buildErrObject(101, "NOT_FOUND"));
+                return res.status(400).send(utils.buildErrObject(101, "MOVIE_NOT_FOUND"));
             }
             return res.json(movie);
         } catch (e) {
