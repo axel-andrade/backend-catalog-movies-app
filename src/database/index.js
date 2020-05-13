@@ -22,6 +22,7 @@ Writer.init(connection);
 Direction.init(connection);
 Cast.init(connection);
 Write.init(connection);
+
 Actor.associate(connection.models);
 Director.associate(connection.models);
 Writer.associate(connection.models);

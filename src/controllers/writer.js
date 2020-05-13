@@ -1,11 +1,11 @@
-const Director = require('../models/director');
+const Writer = require('../models/writer');
 const utils = require('../utils');
 
 module.exports = {
 
-    async getDirectors(req, res) {
+    async getWriters(req, res) {
         try {
-            const {count, rows} = await Director.findAndCountAll({
+            const {count, rows} = await Writer.findAndCountAll({
                 include:  { association: 'star'}
             });
             return res.json(rows);

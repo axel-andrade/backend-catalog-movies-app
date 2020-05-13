@@ -4,6 +4,8 @@ const Actor = require('../models/actor');
 const Director = require('../models/director');
 const Writer = require('../models/writer');
 const utils = require('../utils');
+const {Op} = require('sequelize');
+
 
 const optionsQueryMovieForStars = [
     utils.formatOptionForQueryMovie('directors', 'star'),
@@ -13,31 +15,30 @@ const optionsQueryMovieForStars = [
 
 const changeStarInMovie = async (req, res, model, op = 'add') => {
     try {
-        const { movie_id } = req.params;
-        const { ids } = req.body;
+        const {movie_id} = req.params;
+        const {ids} = req.body;
         const movie = await Movie.findByPk(movie_id);
-        if(!movie){
+        if (!movie) {
             return res.status(400).send(utils.buildErrObject(101, "MOVIE_NOT_FOUND"));
         }
         const stars = await model.findAll({
-            where: { id: ids}
+            where: {id: ids}
         });
-        if(!stars || stars.length <= 0){
+        if (!stars || stars.length <= 0) {
             return res.status(400).send(utils.buildErrObject(101, "STARS_NOT_FOUND"));
         }
 
-        if(op === 'add'){
+        if (op === 'add') {
             await Promise.all(
-                stars.map( star => star.addMovie(movie))
+                stars.map(star => star.addMovie(movie))
             );
-        }
-        else if( op === 'remove'){
+        } else if (op === 'remove') {
             await Promise.all(
-                stars.map( star => star.removeMovie(movie))
+                stars.map(star => star.removeMovie(movie))
             );
         }
 
-        return res.json({ message: "Operação realizada com sucesso."});
+        return res.json({message: "Operação realizada com sucesso."});
     } catch (e) {
         res.status(400).send(e);
     }
@@ -54,7 +55,25 @@ module.exports = {
     },
     async updateMovie(req, res) {
         try {
-            const movie = await Movie.update(req.body);
+            const movie = await Movie.findByPk(req.params.id, {
+                include: optionsQueryMovieForStars
+            });
+            if (!movie) {
+                return res.status(400).send(utils.buildErrObject(101, "MOVIE_NOT_FOUND"));
+            }
+            await movie.update(req.body);
+            return res.json(movie);
+        } catch (e) {
+            res.status(400).send(e);
+        }
+    },
+    async deleteMovie(req, res) {
+        try {
+            const movie = await Movie.findByPk(req.params.id);
+            if (!movie) {
+                return res.status(400).send(utils.buildErrObject(101, "MOVIE_NOT_FOUND"));
+            }
+            await movie.destroy();
             return res.json(movie);
         } catch (e) {
             res.status(400).send(e);
@@ -62,10 +81,10 @@ module.exports = {
     },
     async getMovieById(req, res) {
         try {
-            const movie = await Movie.findByPk(req.params.id,{
+            const movie = await Movie.findByPk(req.params.id, {
                 include: optionsQueryMovieForStars
             });
-            if(!movie){
+            if (!movie) {
                 return res.status(400).send(utils.buildErrObject(101, "MOVIE_NOT_FOUND"));
             }
             return res.json(movie);
@@ -75,24 +94,46 @@ module.exports = {
     },
     async getMovies(req, res) {
         try {
-            const { limit = 10 , offset = 0 } = req.params;
-            const { count : total, rows : movies } = await Movie.findAndCountAll({
-                // where: {
-                //     title: {
-                //         [Op.like]: 'foo%'
-                //     }
-                // },
+            const {limit = 10, offset = 0, search = ''} = req.query;
+            const {count: total, rows: movies} = await Movie.findAndCountAll({
+                where: {
+                    [Op.or]: [
+                        {
+                            title: {
+                                [Op.iRegexp]: search
+                            }
+                        },
+                        {
+                            original_title: {
+                                [Op.iRegexp]: search
+                            }
+                        },
+                        {
+                            description: {
+                                [Op.iRegexp]: search
+                            }
+                        },
+                        {
+                            language: {
+                                [Op.iRegexp]: search
+                            }
+                        },
+                    ],
+                },
                 include: optionsQueryMovieForStars,
+                order: [
+                    ['id', 'DESC'],
+                ],
                 offset,
                 limit
             });
-            return res.json({ movies, total: movies.length });
+            return res.json({movies, total: movies.length});
         } catch (e) {
             res.status(400).send(e);
         }
     },
     async addDirectors(req, res) {
-       return changeStarInMovie(req, res, Director, 'add');
+        return changeStarInMovie(req, res, Director, 'add');
     },
     async removeDirectors(req, res) {
         return changeStarInMovie(req, res, Director, 'remove');

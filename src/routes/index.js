@@ -12,7 +12,9 @@ router.get('/', (req, res, next) => {
 router.use('/users', require('./users'));
 router.use('/movies', require('./movies'));
 router.use('/stars', require('./stars'));
-router.use('/directions', require('./directions'));
+router.use('/actors', require('./actors'));
+router.use('/directors', require('./directors'));
+router.use('/writers', require('./writers'));
 
 router.use('*', (req, res) => {
     res.status(404).json({

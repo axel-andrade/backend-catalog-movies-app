@@ -13,6 +13,18 @@ router.post(
     controller.createMovie
 );
 
+router.put(
+    '/:id',
+    trimRequest.all,
+    controller.updateMovie
+);
+
+router.delete(
+    '/:id',
+    trimRequest.all,
+    controller.deleteMovie
+);
+
 router.post(
     '/:movie_id/directors',
     trimRequest.all,
